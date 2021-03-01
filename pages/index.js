@@ -128,6 +128,29 @@ export default function Home() {
           <span className="selected-city">{selectedItem?.name}</span> için neler
           yasak?
         </div>
+        <span
+          style={{
+            color:
+              selectedItem?.riskValue === 5
+                ? 'red'
+                : selectedItem?.riskValue === 4
+                ? 'orange'
+                : selectedItem?.riskValue === 3
+                ? 'yellow'
+                : 'blue',
+
+            margin: 20,
+            fontSize: 22,
+            fontWeight: 'bold',
+          }}>
+          {selectedItem?.riskValue === 5
+            ? 'ÇOK YÜKSEK RİSKLİ '
+            : selectedItem?.riskValue === 4
+            ? 'YÜKSEK RİSKLİ '
+            : selectedItem?.riskValue === 3
+            ? 'ORTA RİSKLİ'
+            : 'DÜŞÜK RİSKLİ'}
+        </span>
 
         <div className="content">
           <div className="item">
@@ -225,10 +248,10 @@ export default function Home() {
                 : '-'}
             </span>
           </div>
-
-          <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" />
           <div className="mark">neleryasak.com</div>
         </div>
+
+        <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" />
       </main>
 
       <footer>
@@ -245,12 +268,12 @@ export default function Home() {
         .content {
           border: 3px solid #000;
           border-radius: 14px;
-          padding: 10px 3px;
+          padding: 10px 8px;
           margin: 5px;
           max-height: 550px;
         }
         .selected-city-title {
-          margin-bottom: 30px;
+          margin-bottom: 5px;
           font-size: 2em;
           font-weight: bold;
         }
@@ -274,12 +297,11 @@ export default function Home() {
           margin: 30px;
         }
         .result {
-          font-size: 18px;
           color: #000;
           font-weight: bold;
         }
         .item {
-          margin: 2px;
+          margin: 5px 2px;
         }
         .footer-text {
           font-weight: bold;
