@@ -194,7 +194,7 @@ export default function Home() {
               {selectedItem
                 ? selectedItem?.riskValue === 5
                   ? 'Kapalı 🚫'
-                  : '07:00 - 19:00 Arası açık ✅'
+                  : '07:00 - 19:00 Açık ✅'
                 : '-'}
             </span>
           </div>
@@ -205,7 +205,7 @@ export default function Home() {
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
                   ? 'Kapalı 🚫'
-                  : '09:00 - 19:00 Arası açık ✅'
+                  : '09:00 - 19:00 Açık ✅'
                 : '-'}
             </span>
           </div>
@@ -247,6 +247,7 @@ export default function Home() {
           border-radius: 14px;
           padding: 10px 3px;
           margin: 5px;
+          max-height: 550px;
         }
         .selected-city-title {
           margin-bottom: 30px;
@@ -278,7 +279,7 @@ export default function Home() {
           font-weight: bold;
         }
         .item {
-          margin: 10px;
+          margin: 2px;
         }
         .footer-text {
           font-weight: bold;
