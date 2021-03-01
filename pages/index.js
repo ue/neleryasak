@@ -42,7 +42,48 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Neler Yasak?</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+
+        <meta
+          name="description"
+          content="Yeni tedbirler neler? Hafta içi ve hafta sonu yasakları hangi sehir icin serbest? Restoranlar hangi sehirler icin acildi. Hangi saatler arasinda sokaga cikmak serbest?"
+        />
+        <meta property="og:url" content="https://www.neleryasak.com" />
+        <meta
+          property="og:title"
+          content="Hangi şehir için hangi yasaklar kalkti?"
+        />
+        <meta
+          property="og:description"
+          content="Yeni tedbirler neler? Hafta içi ve hafta sonu yasakları hangi sehir icin serbest? Restoranlar hangi sehirler icin acildi. Hangi saatler arasinda sokaga cikmak serbest?"
+        />
+        <meta property="og:site_name" content="Neler Yasak?" />
+        <meta
+          property="og:image"
+          content="https://firebasestorage.googleapis.com/v0/b/photoai-92d2a.appspot.com/o/photoAI%2FScreen%20Shot%202021-03-02%20at%2000.30.21.png?alt=media&token=6c9c9202-67b8-48d2-881d-6e4058a69f6c"
+        />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@neleryasak" />
+        <meta
+          property="twitter:title"
+          content="Hangi şehir için hangi yasaklar kalkti?"
+        />
+        <meta
+          property="twitter:image"
+          content="https://firebasestorage.googleapis.com/v0/b/photoai-92d2a.appspot.com/o/photoAI%2FScreen%20Shot%202021-03-02%20at%2000.30.21.png?alt=media&token=6c9c9202-67b8-48d2-881d-6e4058a69f6c"
+        />
+        <meta
+          property="twitter:description"
+          content="Yeni tedbirler neler? Hafta içi ve hafta sonu yasakları hangi sehir icin serbest? Restoranlar hangi sehirler icin acildi. Hangi saatler arasinda sokaga cikmak serbest?"
+        />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta
+          name="keywords"
+          content="neler yasak,korona,yeni tedbirler,tedbirler,hafta sonu sokaga cikma, hafta sonu, restorantlar acik mi, Korona virüsü yasaklari,kısıtlamalar,yeni normallesme,normallesme sureci, okullar acildi,neler yasak,neleryasak,korona yasakalri,dugun serbest,"
+        />
+
         <link rel="icon" href="/favicon.ico" />
         <link
           href="https://fonts.googleapis.com/css?family=Nunito:300,400,500,600,700,800,900&display=swap"
