@@ -251,7 +251,7 @@ export default function Home() {
           <div className="mark">neleryasak.com</div>
         </div>
 
-        <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" />
+        {/* <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" /> */}
       </main>
 
       <footer>
