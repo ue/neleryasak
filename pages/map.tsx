@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { data } from './data';
+import { data } from '../data';
 
 interface IProps {
   viewBox: ViewBoxType;
@@ -159,6 +159,7 @@ export default class TurkeyMap extends Component<IProps> {
           margin: '0 auto',
           textAlign: 'center',
           width: '100vw',
+          marginBottom: '-35px',
         }}
         hidden={!this.props.visible}>
         <svg

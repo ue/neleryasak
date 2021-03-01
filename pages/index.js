@@ -1,9 +1,43 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import TurkeyMap from './map';
+import { data } from '../data';
+import Select from 'react-select';
+import AdSense from 'react-adsense';
 
 export default function Home() {
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItem, setSelectedItem] = useState({
+    id: 'Istanbul',
+    riskValue: 4,
+    name: 'Istanbul',
+  });
+  const mappedData = data.map((item) => ({
+    ...item,
+    value: item.id,
+    label: item.name,
+  }));
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted pink',
+      color: state.isSelected ? '#fff' : '#333',
+      padding: 10,
+      textAlign: 'left',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+    }),
+    control: () => ({
+      border: '3px solid #0070f3',
+      borderRadius: '10px',
+      display: 'flex',
+      color: '#333',
+      fontWeight: 'bold',
+    }),
+  };
 
   return (
     <div className="container">
@@ -14,6 +48,10 @@ export default function Home() {
           href="https://fonts.googleapis.com/css?family=Nunito:300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"
         />
+        <script
+          data-ad-client="ca-pub-6892073554958359"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
       </Head>
 
       <main>
@@ -22,7 +60,7 @@ export default function Home() {
         </h1>
 
         <p className="description">
-          Yasadiginiz sehri secebilir, neler yasak ogrenebilirsin. 👇
+          Yaşadığınız şehri seçebilir ve neler yasak öğrenebilirsin.👇
         </p>
 
         <TurkeyMap
@@ -33,6 +71,22 @@ export default function Home() {
             console.log(item.riskValue);
           }}
         />
+        <span>veya</span>
+
+        <div className="select-wrapper">
+          <Select
+            styles={customStyles}
+            options={mappedData}
+            placeholder="Iller"
+            value={{ value: selectedItem?.id, label: selectedItem?.name }}
+            onChange={(selectedItem) => setSelectedItem(selectedItem)}
+          />
+        </div>
+
+        <div className="selected-city-title">
+          <span className="selected-city">{selectedItem?.name}</span> için neler
+          yasak?
+        </div>
 
         <div className="content">
           <div className="item">
@@ -54,30 +108,30 @@ export default function Home() {
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Gevsetilecek 🚫'
+                  ? 'Gevşetilecek 🚫'
                   : 'Serbest ✅'
                 : '-'}
             </span>
           </div>
           <div className="item">
             <span className="item-title">Okul oncesi</span>{' '}
-            <span className="result">Acik ✅</span>
+            <span className="result">Açık ✅</span>
           </div>
           <div className="item">
             <span className="item-title">Ilkokul</span>{' '}
-            <span className="result">Acik ✅</span>
+            <span className="result">Açık ✅</span>
           </div>
           <div className="item">
             <span className="item-title">8, ve 12. siniflar</span>{' '}
-            <span className="result">Acik ✅</span>
+            <span className="result">Açık ✅</span>
           </div>
           <div className="item">
             <span className="item-title">Ortaokullar</span>{' '}
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Kapali 🚫'
-                  : 'Acik ✅'
+                  ? 'Kapalı 🚫'
+                  : 'Açık ✅'
                 : '-'}
             </span>
           </div>
@@ -98,8 +152,8 @@ export default function Home() {
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5
-                  ? 'Kapali 🚫'
-                  : '07:00 - 19:00 Arasi açık ✅'
+                  ? 'Kapalı 🚫'
+                  : '07:00 - 19:00 Arası açık ✅'
                 : '-'}
             </span>
           </div>
@@ -109,8 +163,8 @@ export default function Home() {
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Kapali 🚫'
-                  : '09:00 - 19:00 Arasi açık ✅'
+                  ? 'Kapalı 🚫'
+                  : '09:00 - 19:00 Arası açık ✅'
                 : '-'}
             </span>
           </div>
@@ -131,6 +185,7 @@ export default function Home() {
             </span>
           </div>
 
+          <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" />
           <div className="mark">neleryasak.com</div>
         </div>
       </main>
@@ -151,6 +206,14 @@ export default function Home() {
           border-radius: 14px;
           padding: 17px;
         }
+        .selected-city-title {
+          margin-bottom: 30px;
+          font-size: 2rem;
+          font-weight: bold;
+        }
+        .selected-city {
+          color: #0070f3;
+        }
         .mark {
           text-align: center;
           margin-top: 30px;
@@ -162,6 +225,10 @@ export default function Home() {
           font-weight: bold;
           margin: 5px;
           color: #0070f3;
+        }
+        .select-wrapper {
+          width: 300px;
+          margin: 30px;
         }
         .result {
           font-size: 18px;
@@ -188,7 +255,7 @@ export default function Home() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: end;
           align-items: center;
         }
 
@@ -230,7 +297,7 @@ export default function Home() {
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: calc(0.75em + 3vmin);
         }
 
         .title,
@@ -240,7 +307,7 @@ export default function Home() {
 
         .description {
           line-height: 1.5;
-          font-size: 1.5rem;
+          font-size: calc(0.75em + 1vmin);
         }
 
         code {

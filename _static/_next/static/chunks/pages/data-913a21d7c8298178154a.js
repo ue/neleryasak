@@ -1,0 +1,1 @@
+_N_E=(window.webpackJsonp_N_E=window.webpackJsonp_N_E||[]).push([[7],{GhfQ:function(n,_,w){(window.__NEXT_P=window.__NEXT_P||[]).push(["/data",function(){return w("NLnR")}])}},[["GhfQ",0,2]]]);
