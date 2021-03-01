@@ -250,7 +250,7 @@ export default function Home() {
         }
         .selected-city-title {
           margin-bottom: 30px;
-          font-size: 1em;
+          font-size: 2em;
           font-weight: bold;
         }
         .selected-city {
