@@ -148,7 +148,7 @@ export default function Home() {
           </div>
 
           <div className="item">
-            <span className="item-title">Restoran/cafe vs.</span>{' '}
+            <span className="item-title">Restoranlar</span>{' '}
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5
@@ -204,11 +204,12 @@ export default function Home() {
         .content {
           border: 3px solid #000;
           border-radius: 14px;
-          padding: 17px;
+          padding: 10px 3px;
+          margin: 5px;
         }
         .selected-city-title {
           margin-bottom: 30px;
-          font-size: 2rem;
+          font-size: 1em;
           font-weight: bold;
         }
         .selected-city {
