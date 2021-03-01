@@ -7,3 +7,4 @@ static_sites:
       branch: master
       deploy_on_push: true
     error_document: index.html
+    catchall_document: index.html
