@@ -1,0 +1,9 @@
+name: neleryasak
+static_sites:
+  - name: site
+    build_command: npm run build && mv build _static
+    github:
+      repo: ue/neleryasak
+      branch: master
+      deploy_on_push: true
+    error_document: index.html
