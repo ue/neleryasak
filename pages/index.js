@@ -112,6 +112,7 @@ export default function Home() {
 
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+        <script src="https://platform.twitter.com/widgets.js"></script>
       </Head>
 
       <main>
@@ -122,6 +123,12 @@ export default function Home() {
         <p className="description">
           Yaşadığınız şehri seçebilir ve neler yasak öğrenebilirsin.👇
         </p>
+
+        <a class="twitter-share-button" 
+        href="https://twitter.com/intent/tweet" 
+        data-size="large"
+        data-text="Hangi şehir için hangi yasaklar kalktı?"
+        data-url="https://www.neleryasak.com/">Tweet</a>
 
         <TurkeyMap
           customStyle={{ idleColor: '#444', hoverColor: '#dc3522' }}
