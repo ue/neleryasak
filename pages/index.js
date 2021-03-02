@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TurkeyMap from './map';
 import { data } from '../data';
 import Select from 'react-select';
-import firebase from 'firebase';
-import 'firebase/analytics';
+import { analytics } from '../fb';
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState({
@@ -40,20 +39,11 @@ export default function Home() {
     }),
   };
 
-  const firebaseConfig = {
-    apiKey: 'AIzaSyD_lioOKPdKAkuQBT__MTcvPmbuW-J-YLU',
-    authDomain: 'neleryasak.firebaseapp.com',
-    projectId: 'neleryasak',
-    storageBucket: 'neleryasak.appspot.com',
-    messagingSenderId: '661383306527',
-    appId: '1:661383306527:web:0e47a96be4b77088fc642a',
-    measurementId: 'G-1BXKDFJL5P',
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  }
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      analytics();
+    }
+  }, []);
 
   return (
     <div className="container">
