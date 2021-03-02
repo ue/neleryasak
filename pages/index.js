@@ -115,14 +115,16 @@ export default function Home() {
           Yaşadığınız şehri seçebilir ve neler yasak öğrenebilirsin.👇
         </p>
 
-        <a class="twitter-share-button" 
-        href="https://twitter.com/intent/tweet" 
-        data-size="large"
-        data-text="Hangi şehir için hangi yasaklar kalktı?"
-        data-url="https://www.neleryasak.com/">Tweet</a>
+        <a
+          class="twitter-share-button"
+          href="https://twitter.com/intent/tweet"
+          data-size="large"
+          data-text="Hangi şehir için hangi yasaklar kalktı?"
+          data-url="https://www.neleryasak.com/">
+          Tweet
+        </a>
 
         <TurkeyMap
-          customStyle={{ idleColor: '#444', hoverColor: '#dc3522' }}
           onHover={(item) => {
             setSelectedItem(item);
             console.log(item);
