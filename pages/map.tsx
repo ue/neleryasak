@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Component } from 'react';
 import { data } from '../data';
@@ -11,6 +12,7 @@ interface IProps {
   cityWrapper?: (cityComponent: JSX.Element, city: CityType) => JSX.Element;
   onHover?: (city: CityType) => void;
   onClick?: (city: CityType) => void;
+  selectedItem: ItemType;
 }
 
 export type CityType = {
@@ -19,6 +21,9 @@ export type CityType = {
   name: string;
   path: string;
   riskValue: number;
+};
+export type ItemType = {
+  id: string;
 };
 export type CustomStyleType = { idleColor: string; hoverColor: string };
 export type ViewBoxType = {
@@ -39,6 +44,7 @@ export default class TurkeyMap extends Component<IProps> {
     hoverable: true,
     data: data,
     customStyle: { idleColor: 'green', hoverColor: 'black' },
+    selectedItem: { id: 'istanbul' },
   };
 
   cityWrapper = () => {
