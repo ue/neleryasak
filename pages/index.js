@@ -190,11 +190,21 @@ export default function Home() {
             <span className="result">Yasak 🚫</span>
           </div>
           <div className="item">
-            <span className="item-title">+65 ve 20 Yas:</span>{' '}
+            <span className="item-title">65 yaş ve üstü:</span>{' '}
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Gevşetilecek 🚫'
+                  ? '10.00-14.00 arası serbest ✅'
+                  : 'Serbest ✅'
+                : '-'}
+            </span>
+          </div>
+          <div className="item">
+            <span className="item-title">20 yaş ve altı:</span>{' '}
+            <span className="result">
+              {selectedItem
+                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
+                  ? '14.00-18.00 arası serbest ✅'
                   : 'Serbest ✅'
                 : '-'}
             </span>
