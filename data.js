@@ -458,6 +458,7 @@ export const data = [
   },
   {
     id: 'kocaeli',
+    riskValue: 4,
     plateNumber: 41,
     name: 'Kocaeli',
     path:

@@ -9,6 +9,7 @@
     "export": "npm run build && next export -o _static"
   },
   "dependencies": {
+    "@react-native-firebase/analytics": "^10.8.1",
     "firebase": "^8.2.9",
     "next": "^10.0.0",
     "react": "17.0.1",

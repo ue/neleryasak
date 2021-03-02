@@ -3,8 +3,8 @@ import { useState } from 'react';
 import TurkeyMap from './map';
 import { data } from '../data';
 import Select from 'react-select';
-import AdSense from 'react-adsense';
 import firebase from 'firebase';
+import 'firebase/analytics';
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState({
@@ -116,7 +116,8 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          <a href="https://neleryasak.com">neleryasak.com'a</a> hosgeldin! 👋
+          <a href="https://www.neleryasak.com">neleryasak.com'a</a> hosgeldin!
+          👋
         </h1>
 
         <p className="description">
@@ -154,21 +155,23 @@ export default function Home() {
                 ? 'red'
                 : selectedItem?.riskValue === 4
                 ? 'orange'
-                : selectedItem?.riskValue === 3
-                ? 'yellow'
-                : 'blue',
+                : selectedItem?.riskValue === 2
+                ? 'blue'
+                : '#fde03b',
 
             margin: 20,
             fontSize: 22,
             fontWeight: 'bold',
           }}>
-          {selectedItem?.riskValue === 5
-            ? 'ÇOK YÜKSEK RİSKLİ '
-            : selectedItem?.riskValue === 4
-            ? 'YÜKSEK RİSKLİ '
-            : selectedItem?.riskValue === 3
-            ? 'ORTA RİSKLİ'
-            : 'DÜŞÜK RİSKLİ'}
+          {selectedItem
+            ? selectedItem?.riskValue === 5
+              ? 'ÇOK YÜKSEK RİSKLİ '
+              : selectedItem?.riskValue === 4
+              ? 'YÜKSEK RİSKLİ '
+              : selectedItem?.riskValue === 2
+              ? 'DÜŞÜK RİSKLİ'
+              : 'ORTA RİSKLİ'
+            : 'ORTA RİSKLİ'}
         </span>
 
         <div className="content">
@@ -267,6 +270,17 @@ export default function Home() {
                 : '-'}
             </span>
           </div>
+
+          <div className="item">
+            <span className="item-title">Genel Kurul</span>{' '}
+            <span className="result">
+              {selectedItem
+                ? selectedItem?.riskValue === 5
+                  ? 'Yasak 🚫'
+                  : '300 kisiye kadar ✅'
+                : '-'}
+            </span>
+          </div>
           <div className="mark">neleryasak.com</div>
         </div>
 
@@ -289,7 +303,7 @@ export default function Home() {
           border-radius: 14px;
           padding: 10px 8px;
           margin: 5px;
-          max-height: 550px;
+          max-height: 650px;
         }
         .selected-city-title {
           margin-bottom: 5px;
@@ -394,25 +408,6 @@ export default function Home() {
           font-size: calc(0.75em + 1vmin);
         }
 
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
         .card {
           margin: 1rem;
           flex-basis: 45%;
@@ -425,34 +420,6 @@ export default function Home() {
           transition: color 0.15s ease, border-color 0.15s ease;
         }
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
         #svg-turkiye-haritasi {
           width: 100vw !important;
         }
