@@ -9,6 +9,7 @@
     "export": "npm run build && next export -o _static"
   },
   "dependencies": {
+    "firebase": "^8.2.9",
     "next": "^10.0.0",
     "react": "17.0.1",
     "react-adsense": "^0.1.0",

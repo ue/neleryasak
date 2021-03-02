@@ -4,6 +4,7 @@ import TurkeyMap from './map';
 import { data } from '../data';
 import Select from 'react-select';
 import AdSense from 'react-adsense';
+import firebase from 'firebase';
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState({
@@ -38,6 +39,21 @@ export default function Home() {
       fontWeight: 'bold',
     }),
   };
+
+  const firebaseConfig = {
+    apiKey: 'AIzaSyD_lioOKPdKAkuQBT__MTcvPmbuW-J-YLU',
+    authDomain: 'neleryasak.firebaseapp.com',
+    projectId: 'neleryasak',
+    storageBucket: 'neleryasak.appspot.com',
+    messagingSenderId: '661383306527',
+    appId: '1:661383306527:web:0e47a96be4b77088fc642a',
+    measurementId: 'G-1BXKDFJL5P',
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  }
 
   return (
     <div className="container">
@@ -93,6 +109,9 @@ export default function Home() {
           data-ad-client="ca-pub-6892073554958359"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
       </Head>
 
       <main>
@@ -201,7 +220,7 @@ export default function Home() {
           </div>
 
           <div className="item">
-            <span className="item-title">Ortaokullar</span>{' '}
+            <span className="item-title">Liseler</span>{' '}
             <span className="result">
               {selectedItem
                 ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
