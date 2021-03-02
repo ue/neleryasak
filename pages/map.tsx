@@ -54,6 +54,7 @@ export default class TurkeyMap extends Component<IProps> {
   };
 
   onClick = (event: React.MouseEvent<SVGGElement, MouseEvent>): void => {
+    (event.target as SVGGElement).style.fill = 'gray';
     if (this.props.onClick) this.handleMouseEvent(event, this.props.onClick);
   };
 
@@ -77,7 +78,8 @@ export default class TurkeyMap extends Component<IProps> {
         : 'blue'
       : 'yellow';
 
-    (event.target as SVGGElement).style.fill = color;
+    (event.target as SVGGElement).style.fill =
+      this.props.selectedItem.id === cityId ? 'gray' : color;
   };
 
   handleMouseEvent = (
@@ -125,15 +127,18 @@ export default class TurkeyMap extends Component<IProps> {
           <path
             style={{
               cursor: 'pointer',
-              fill: city.riskValue
-                ? city.riskValue === 5
-                  ? 'red'
-                  : city.riskValue === 4
-                  ? 'orange'
-                  : city.riskValue === 3
-                  ? 'yellow'
-                  : 'blue'
-                : 'yellow',
+              fill:
+                this.props.selectedItem.id === city.id
+                  ? 'gray'
+                  : city.riskValue
+                  ? city.riskValue === 5
+                    ? 'red'
+                    : city.riskValue === 4
+                    ? 'orange'
+                    : city.riskValue === 3
+                    ? 'yellow'
+                    : 'blue'
+                  : 'yellow',
             }}
             d={city.path}
           />

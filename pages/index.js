@@ -125,7 +125,8 @@ export default function Home() {
         </a>
 
         <TurkeyMap
-          onHover={(item) => {
+          selectedItem={selectedItem}
+          onClick={(item) => {
             setSelectedItem(item);
             console.log(item);
             console.log(item.riskValue);
