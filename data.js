@@ -529,6 +529,7 @@ export const data = [
   },
   {
     id: 'yalova',
+    riskValue: 4,
     plateNumber: 77,
     name: 'Yalova',
     path:
