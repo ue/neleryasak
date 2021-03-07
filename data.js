@@ -374,6 +374,7 @@ export const data = [
   },
   {
     id: 'bingol',
+    riskValue: 2,
     plateNumber: 12,
     name: 'Bingöl',
     path:
