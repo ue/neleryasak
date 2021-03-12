@@ -73,7 +73,7 @@ export default function Home() {
         <meta property="twitter:site" content="@neleryasak" />
         <meta
           property="twitter:title"
-          content="Hangi şehir için hangi yasaklar kalkti?"
+          content="Hangi şehir için hangi yasaklar kalkti? Istanbulda neler yask, hafta sonu sokaga cikmak serbest mi? Restoranlar acildi mi? Pazar gunu sokaga cikmak serbest mi?"
         />
         <meta
           property="twitter:image"
@@ -87,7 +87,7 @@ export default function Home() {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta
           name="keywords"
-          content="neler yasak,korona,yeni tedbirler,tedbirler,hafta sonu sokaga cikma, hafta sonu, restorantlar acik mi, Korona virüsü yasaklari,kısıtlamalar,yeni normallesme,normallesme sureci, okullar acildi,neler yasak,neleryasak,korona yasakalri,dugun serbest,"
+          content="neler yasak,korona,yeni tedbirler,tedbirler,hafta sonu sokaga cikma, hafta sonu, restorantlar acik mi, Korona virüsü yasaklari,kısıtlamalar,yeni normallesme,normallesme sureci, okullar acildi,neler yasak,neleryasak,korona yasakalri,dugun serbest,istanbulda neler yasak,istanbul yasaklari iller bazinda yasaklar,izmirde neler yasak,ankarada neler yasak,sokaga cikma yasaklari,restorantlar hangi saatlerde acik, restoranlar ne zaman kapali,sehirler arasi yasaklar,okullar acik mi,covid 19,corona yasaklari,yeni noramllesme,istanbul restoranlar acik mi,istanbul hafta sonu yasakalri,hafta sonu sokaga cikmak"
         />
 
         <link rel="icon" href="/favicon.ico" />
