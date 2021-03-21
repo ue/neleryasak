@@ -1,16 +1,14 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import TurkeyMap from './map';
-import { data } from '../data';
-import Select from 'react-select';
-import { analytics } from '../fb';
+import Head from "next/head";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { data } from "../data";
+import Select from "react-select";
+import { analytics } from "../fb";
+
+const TurkeyMap = dynamic(() => import("../components/map"), { ssr: false });
 
 export default function Home() {
-  const [selectedItem, setSelectedItem] = useState({
-    id: 'Istanbul',
-    riskValue: 4,
-    name: 'Istanbul',
-  });
+  const [selectedItem, setSelectedItem] = useState({});
   const mappedData = data.map((item) => ({
     ...item,
     value: item.id,
@@ -20,30 +18,38 @@ export default function Home() {
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-      borderBottom: '1px dotted pink',
-      color: state.isSelected ? '#fff' : '#333',
+      borderBottom: "1px dotted pink",
+      color: state.isSelected ? "#fff" : "#333",
       padding: 10,
-      textAlign: 'left',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      fontWeight: 'bold',
-      cursor: 'pointer',
+      textAlign: "left",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      fontWeight: "bold",
+      cursor: "pointer",
     }),
     control: () => ({
-      border: '3px solid #0070f3',
-      borderRadius: '10px',
-      display: 'flex',
-      color: '#333',
-      fontWeight: 'bold',
+      border: "3px solid #0070f3",
+      borderRadius: "10px",
+      display: "flex",
+      color: "#333",
+      fontWeight: "bold",
     }),
   };
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       analytics();
     }
   }, []);
+
+  const handleCityName = (cityName) => {
+    setSelectedItem(cityName);
+  };
+
+  const handleAllCities = (cities) => {
+    setSelectedItem(cities);
+  };
 
   return (
     <div className="container">
@@ -98,7 +104,8 @@ export default function Home() {
         <script
           data-ad-client="ca-pub-6892073554958359"
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        ></script>
 
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
@@ -116,183 +123,190 @@ export default function Home() {
         </p>
 
         <a
-          class="twitter-share-button"
+          className="twitter-share-button"
           href="https://twitter.com/intent/tweet"
           data-size="large"
           data-text="Hangi şehir için hangi yasaklar kalktı?"
-          data-url="https://www.neleryasak.com/">
+          data-url="https://www.neleryasak.com/"
+        >
           Tweet
         </a>
 
         <TurkeyMap
-          selectedItem={selectedItem}
-          onClick={(item) => {
-            setSelectedItem(item);
-            console.log(item);
-            console.log(item.riskValue);
-          }}
+          getCityName={handleCityName}
+          getAllCities={handleAllCities}
         />
-        <span>veya</span>
 
-        <div className="select-wrapper">
-          <Select
-            styles={customStyles}
-            options={mappedData}
-            placeholder="Iller"
-            value={{ value: selectedItem?.id, label: selectedItem?.name }}
-            onChange={(selectedItem) => setSelectedItem(selectedItem)}
-          />
-        </div>
+        {Object.keys(selectedItem).length > 0 && (
+          <>
+            <div className="select-wrapper">
+              <Select
+                styles={customStyles}
+                options={mappedData}
+                placeholder="Iller"
+                value={{ value: selectedItem?.id, label: selectedItem?.name }}
+                onChange={(selectedItem) => setSelectedItem(selectedItem)}
+              />
+            </div>
+            <div className="selected-city-title">
+              <span className="selected-city">{selectedItem?.name}</span> için
+              neler yasak?
+            </div>
+            <span
+              style={{
+                color:
+                  selectedItem?.riskValue === 5
+                    ? "red"
+                    : selectedItem?.riskValue === 4
+                    ? "orange"
+                    : selectedItem?.riskValue === 2
+                    ? "blue"
+                    : "#fde03b",
 
-        <div className="selected-city-title">
-          <span className="selected-city">{selectedItem?.name}</span> için neler
-          yasak?
-        </div>
-        <span
-          style={{
-            color:
-              selectedItem?.riskValue === 5
-                ? 'red'
-                : selectedItem?.riskValue === 4
-                ? 'orange'
-                : selectedItem?.riskValue === 2
-                ? 'blue'
-                : '#fde03b',
-
-            margin: 20,
-            fontSize: 22,
-            fontWeight: 'bold',
-          }}>
-          {selectedItem
-            ? selectedItem?.riskValue === 5
-              ? 'ÇOK YÜKSEK RİSKLİ '
-              : selectedItem?.riskValue === 4
-              ? 'YÜKSEK RİSKLİ '
-              : selectedItem?.riskValue === 2
-              ? 'DÜŞÜK RİSKLİ'
-              : 'ORTA RİSKLİ'
-            : 'ORTA RİSKLİ'}
-        </span>
-
-        <div className="content">
-          <div className="item">
-            <span className="item-title">Hafta sonu sokağa çıkmak:</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Pazar Yasak 🚫'
-                  : 'Serbest ✅'
-                : '-'}
-            </span>
-          </div>
-          <div className="item">
-            <span className="item-title">Aksam sokaga sokağa çıkmak:</span>{' '}
-            <span className="result">Yasak 🚫</span>
-          </div>
-          <div className="item">
-            <span className="item-title">65 yaş ve üstü:</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? '10.00-14.00 arası serbest ✅'
-                  : 'Serbest ✅'
-                : '-'}
-            </span>
-          </div>
-          <div className="item">
-            <span className="item-title">20 yaş ve altı:</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? '14.00-18.00 arası serbest ✅'
-                  : 'Serbest ✅'
-                : '-'}
-            </span>
-          </div>
-          <div className="item">
-            <span className="item-title">Okul oncesi</span>{' '}
-            <span className="result">Açık ✅</span>
-          </div>
-          <div className="item">
-            <span className="item-title">Ilkokul</span>{' '}
-            <span className="result">Açık ✅</span>
-          </div>
-          <div className="item">
-            <span className="item-title">8, ve 12. siniflar</span>{' '}
-            <span className="result">Açık ✅</span>
-          </div>
-          <div className="item">
-            <span className="item-title">Ortaokullar</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Kapalı 🚫'
-                  : 'Açık ✅'
-                : '-'}
-            </span>
-          </div>
-
-          <div className="item">
-            <span className="item-title">Liseler</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Yüz yüze sınav 🚫'
-                  : 'Açık ✅'
-                : '-'}
-            </span>
-          </div>
-
-          <div className="item">
-            <span className="item-title">Restoranlar</span>{' '}
-            <span className="result">
+                margin: 20,
+                fontSize: 22,
+                fontWeight: "bold",
+              }}
+            >
               {selectedItem
                 ? selectedItem?.riskValue === 5
-                  ? 'Kapalı 🚫'
-                  : '07:00 - 19:00 Açık ✅'
-                : '-'}
+                  ? "ÇOK YÜKSEK RİSKLİ "
+                  : selectedItem?.riskValue === 4
+                  ? "YÜKSEK RİSKLİ "
+                  : selectedItem?.riskValue === 2
+                  ? "DÜŞÜK RİSKLİ"
+                  : "ORTA RİSKLİ"
+                : "ORTA RİSKLİ"}
             </span>
-          </div>
 
-          <div className="item">
-            <span className="item-title">Hali saha, havuzlar</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? 'Kapalı 🚫'
-                  : '09:00 - 19:00 Açık ✅'
-                : '-'}
-            </span>
-          </div>
+            <div className="content">
+              <div className="item">
+                <span className="item-title">Hafta sonu sokağa çıkmak:</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "Pazar Yasak 🚫"
+                      : "Serbest ✅"
+                    : "-"}
+                </span>
+              </div>
+              <div className="item">
+                <span className="item-title">Aksam sokaga sokağa çıkmak:</span>{" "}
+                <span className="result">Yasak 🚫</span>
+              </div>
+              <div className="item">
+                <span className="item-title">65 yaş ve üstü:</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "10.00-14.00 arası serbest ✅"
+                      : "Serbest ✅"
+                    : "-"}
+                </span>
+              </div>
+              <div className="item">
+                <span className="item-title">20 yaş ve altı:</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "14.00-18.00 arası serbest ✅"
+                      : "Serbest ✅"
+                    : "-"}
+                </span>
+              </div>
+              <div className="item">
+                <span className="item-title">Okul oncesi</span>{" "}
+                <span className="result">Açık ✅</span>
+              </div>
+              <div className="item">
+                <span className="item-title">Ilkokul</span>{" "}
+                <span className="result">Açık ✅</span>
+              </div>
+              <div className="item">
+                <span className="item-title">8, ve 12. siniflar</span>{" "}
+                <span className="result">Açık ✅</span>
+              </div>
+              <div className="item">
+                <span className="item-title">Ortaokullar</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "Kapalı 🚫"
+                      : "Açık ✅"
+                    : "-"}
+                </span>
+              </div>
 
-          <div className="item">
-            <span className="item-title">Kamu</span>{' '}
-            <span className="result">Normal ✅</span>
-          </div>
+              <div className="item">
+                <span className="item-title">Liseler</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "Yüz yüze sınav 🚫"
+                      : "Açık ✅"
+                    : "-"}
+                </span>
+              </div>
 
-          <div className="item">
-            <span className="item-title">Nikah</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5 || selectedItem?.riskValue === 4
-                  ? '50 kisiye kadar 1 saat ✅'
-                  : '100 kisiye kadar 1 saat ✅'
-                : '-'}
-            </span>
-          </div>
+              <div className="item">
+                <span className="item-title">Restoranlar</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5
+                      ? "Kapalı 🚫"
+                      : "07:00 - 19:00 Açık ✅"
+                    : "-"}
+                </span>
+              </div>
 
-          <div className="item">
-            <span className="item-title">Genel Kurul</span>{' '}
-            <span className="result">
-              {selectedItem
-                ? selectedItem?.riskValue === 5
-                  ? 'Yasak 🚫'
-                  : '300 kisiye kadar ✅'
-                : '-'}
-            </span>
-          </div>
-          <div className="mark">neleryasak.com</div>
-        </div>
+              <div className="item">
+                <span className="item-title">Hali saha, havuzlar</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "Kapalı 🚫"
+                      : "09:00 - 19:00 Açık ✅"
+                    : "-"}
+                </span>
+              </div>
+
+              <div className="item">
+                <span className="item-title">Kamu</span>{" "}
+                <span className="result">Normal ✅</span>
+              </div>
+
+              <div className="item">
+                <span className="item-title">Nikah</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5 ||
+                      selectedItem?.riskValue === 4
+                      ? "50 kisiye kadar 1 saat ✅"
+                      : "100 kisiye kadar 1 saat ✅"
+                    : "-"}
+                </span>
+              </div>
+
+              <div className="item">
+                <span className="item-title">Genel Kurul</span>{" "}
+                <span className="result">
+                  {selectedItem
+                    ? selectedItem?.riskValue === 5
+                      ? "Yasak 🚫"
+                      : "300 kisiye kadar ✅"
+                    : "-"}
+                </span>
+              </div>
+              <div className="mark">neleryasak.com</div>
+            </div>
+          </>
+        )}
 
         {/* <AdSense.Google client="ca-pub-6892073554958359" slot="7806394673" /> */}
       </main>
@@ -302,8 +316,18 @@ export default function Home() {
           href="https://twitter.com/ugurerdal"
           className="footer-text"
           target="_blank"
-          rel="noopener noreferrer">
+          rel="noopener noreferrer"
+        >
           Ugur Erdal
+        </a>
+        <span>|</span>
+        <a
+          href="https://twitter.com/isagul_"
+          className="footer-text"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Isa Gul
         </a>
       </footer>
 
@@ -365,6 +389,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: end;
           align-items: center;
+          width: 100%;
         }
 
         footer {
@@ -384,6 +409,10 @@ export default function Home() {
           display: flex;
           justify-content: center;
           align-items: center;
+        }
+
+        footer span {
+          margin: auto 8px;
         }
 
         a {
