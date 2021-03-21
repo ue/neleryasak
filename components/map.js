@@ -152,7 +152,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
 
   useEffect(() => {
     createMap();
-  }, [mapData, loading]);
+  }, [mapData]);
 
   const handleCaseRatios = (url) => {
     setLoading(true);
