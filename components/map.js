@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import Datamap from "datamaps";
-import { geoPath, geoMercator } from "d3-geo";
-import { getTurkeyTopology } from "../api/getTurkeyTopology";
-import { getCaseRatio } from "../api/getCaseRatio";
-import classificationCitiesByCaseCount from "../utils/classificationCitiesByCaseCount";
-import cityPopulation from "../constants/CityPopulation";
-import caseBorders from "../constants/caseBorders";
-import ClipLoader from "react-spinners/ClipLoader";
-import { css } from "@emotion/core";
+import { useState, useEffect } from 'react';
+import Datamap from 'datamaps';
+import { geoPath, geoMercator } from 'd3-geo';
+import { getTurkeyTopology } from '../api/getTurkeyTopology';
+import { getCaseRatio } from '../api/getCaseRatio';
+import classificationCitiesByCaseCount from '../utils/classificationCitiesByCaseCount';
+import cityPopulation from '../constants/cityPopulation';
+import caseBorders from '../constants/caseBorders';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { css } from '@emotion/core';
 
 const cityStatuses = {
-  "Çok Yüksek Risk": 5,
-  "Yüksek Risk": 4,
-  "Orta Risk": 3,
-  "Düşük Risk": 2,
+  'Çok Yüksek Risk': 5,
+  'Yüksek Risk': 4,
+  'Orta Risk': 3,
+  'Düşük Risk': 2,
 };
 
 const TurkeyMap = ({ getCityName, getAllCities }) => {
@@ -21,7 +21,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(false);
   const topographyURL =
-    "https://gist.githubusercontent.com/isagul/2887858e1c759e006e604032b0e31c79/raw/438b8a8d419a5059c07ea5115aa65ca7b3f294cd/turkey.topo.json";
+    'https://gist.githubusercontent.com/isagul/2887858e1c759e006e604032b0e31c79/raw/438b8a8d419a5059c07ea5115aa65ca7b3f294cd/turkey.topo.json';
 
   const override = css`
     display: block;
@@ -31,7 +31,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
 
   const mapConfig = (element) => {
     return {
-      scope: "collection",
+      scope: 'collection',
       height: 600,
       responsive: window.innerWidth < 900 ? true : false,
       element: element,
@@ -45,8 +45,8 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
       },
       done: function (datamap) {
         datamap.svg
-          .selectAll(".datamaps-subunit")
-          .on("click", function (geography) {
+          .selectAll('.datamaps-subunit')
+          .on('click', function (geography) {
             let newCity = {};
             const { id, properties } = geography;
             const { name } = properties;
@@ -58,23 +58,23 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
           });
         let selectedCity = {};
         const findCity = datamap.svg
-          .selectAll(".datamaps-subunit")[0]
+          .selectAll('.datamaps-subunit')[0]
           .find(
             (city) =>
-              JSON.parse(city.getAttribute("data-info")).name === "İstanbul"
+              JSON.parse(city.getAttribute('data-info')).name === 'İstanbul'
           );
         selectedCity.riskValue =
-          cityStatuses[JSON.parse(findCity.getAttribute("data-info")).fillKey];
+          cityStatuses[JSON.parse(findCity.getAttribute('data-info')).fillKey];
         getAllCities({
           ...selectedCity,
-          ...JSON.parse(findCity.getAttribute("data-info")),
+          ...JSON.parse(findCity.getAttribute('data-info')),
         });
       },
       geographyConfig: {
         dataUrl: topographyURL,
-        highlightBorderColor: "#000",
-        borderColor: "#565252",
-        highlightFillColor: "#1B888C",
+        highlightBorderColor: '#000',
+        borderColor: '#565252',
+        highlightFillColor: '#1B888C',
         popupTemplate: function (geography, data) {
           return `<div class="hoverinfo" style="padding: 10px; border-radius: 2px; font-family: nunito;">
                   <div style='text-align:center; font-weight: 600; color:#1B888C; font-size: 18px'>${data.name}</div>
@@ -86,17 +86,17 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
         highlightBorderWidth: 3,
       },
       fills: {
-        "Çok Yüksek Risk": "#CE0404",
-        "Yüksek Risk": "#F08F00",
-        "Orta Risk": "#FEFD05",
-        "Düşük Risk": "#13B3C5",
-        defaultFill: "#EDDC4E",
+        'Çok Yüksek Risk': '#CE0404',
+        'Yüksek Risk': '#F08F00',
+        'Orta Risk': '#FEFD05',
+        'Düşük Risk': '#13B3C5',
+        defaultFill: '#EDDC4E',
       },
     };
   };
 
   useEffect(() => {
-    handleCaseRatios("https://covid-turkey-case-ratio.herokuapp.com/");
+    handleCaseRatios('https://covid-turkey-case-ratio.herokuapp.com/');
   }, []);
 
   useEffect(() => {
@@ -115,7 +115,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
               resultObject = classificationCitiesByCaseCount(
                 findCity,
                 geometry,
-                "Düşük Risk"
+                'Düşük Risk'
               );
             } else if (
               findCity.caseRatio > caseBorders.medium.minRiskBorder &&
@@ -124,7 +124,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
               resultObject = classificationCitiesByCaseCount(
                 findCity,
                 geometry,
-                "Orta Risk"
+                'Orta Risk'
               );
             } else if (
               findCity.caseRatio > caseBorders.bad.minRiskBorder &&
@@ -133,13 +133,13 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
               resultObject = classificationCitiesByCaseCount(
                 findCity,
                 geometry,
-                "Yüksek Risk"
+                'Yüksek Risk'
               );
             } else {
               resultObject = classificationCitiesByCaseCount(
                 findCity,
                 geometry,
-                "Çok Yüksek Risk"
+                'Çok Yüksek Risk'
               );
             }
             lastMapData = { ...lastMapData, ...resultObject };
@@ -166,7 +166,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
                 cityCaseRatio.name.toLocaleLowerCase()
             );
             if (findCity) {
-              cityCaseRatio["caseRatio"] = findCity.caseRatio;
+              cityCaseRatio['caseRatio'] = findCity.caseRatio;
               return cityCaseRatio;
             }
           });
@@ -174,7 +174,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
         }
       })
       .catch((err) => {
-        console.log("err :>> ", err);
+        console.log('err :>> ', err);
       })
       .then(() => {
         setLoading(false);
@@ -184,7 +184,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
   const createMap = () => {
     if (mapData !== undefined && Object.keys(mapData).length > 0) {
       new Datamap({
-        ...mapConfig(document.getElementById("mapWrapper")),
+        ...mapConfig(document.getElementById('mapWrapper')),
         data: mapData,
       });
     }
@@ -195,7 +195,7 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
       {loading ? (
         <ClipLoader loading={loading} size={50} css={override} />
       ) : (
-        <div id="mapWrapper" style={{ width: "100%" }} />
+        <div id="mapWrapper" style={{ width: '100%' }} />
       )}
     </>
   );
