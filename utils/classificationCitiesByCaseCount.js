@@ -1,4 +1,4 @@
-import { formatNumbers } from "./FormatNumbers";
+import { formatNumbers } from './formatNumbers';
 
 const classificationCitiesByCaseCount = (findCity, geometry, riskStatus) => {
   let resultObject = {};
