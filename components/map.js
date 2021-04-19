@@ -94,9 +94,9 @@ const TurkeyMap = ({ getCityName, getAllCities }) => {
       },
     };
   };
-
+  
   useEffect(() => {
-    handleCaseRatios('https://covid-turkey-case-ratio.herokuapp.com/');
+    handleCaseRatios('https://api-covid-turkey.herokuapp.com');
   }, []);
 
   useEffect(() => {
